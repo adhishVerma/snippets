@@ -6,40 +6,33 @@ class Node:
 class LinkedList:
   def __init__(self) -> None:
     self.head = None 
-    self.tail = None
 
-  def insertHead(self,node:Node) -> None:
-    node.next = self.head #pointing the new head to current head
-    self.head = node #setting the list head as the  new  node
-
-  def insertTail(self,node:Node) -> None:
-    self.tail = node #A single node will point towards None
+  def prepend(self,data) -> None:
+    newHead =  Node(data)
+    newHead.next = self.head
+    self.head = newHead
 
 
+  def append(self, data) -> None:
+    if(self.head == None):
+      head =  Node(data)
+      self.head = head
+      return
 
-# creating a LL and printing it
-llist = LinkedList()
+    current  = self.head
+    while  (current.next != None):
+      current = current.next
+    current.next = Node(data)
 
-llist.head = Node(1)
-second = Node(2)
-third = Node(3)
+  def deleteValue(self,data):
+    if(self.head == None): return
+    if(self.head.data == data):
+      self.head == self.head.next
+      return
 
-llist.head.next = second
-second.next = third
-
-
-# we use dummy variable to traverse through list
-dummy = llist.head
-while(dummy):
-  print(dummy.data,end=" ")
-  dummy = dummy.next
-
-llist.insertHead(Node(12))
-
-print("\n after inserting head")
-
-dummy = llist.head
-while(dummy):
-  print(dummy.data,end=" ")
-  dummy = dummy.next
-
+    current = self.head
+    while (current.next != None):
+      if(current.next.data == data):
+        current.next = current.next.next
+        return
+      current = current.next
