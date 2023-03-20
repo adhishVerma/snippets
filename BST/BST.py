@@ -5,12 +5,12 @@ class Node:
     self.right = None
 
 
-a = Node('a')
-b = Node('b')
-c = Node('c')
-d = Node('d')
-e = Node('e')
-f = Node('f')
+a = Node(5)
+b = Node(11)
+c = Node(3)
+d = Node(4)
+e = Node(2)
+f = Node(1)
 
 a.left = b
 a.right = c
@@ -80,9 +80,57 @@ c.right = f
 #   right = includes(root.right,data)
 #   return left or right
 
+# def sumOfTree(root):
+#   if root == None: return 0
+#   left = sumOfTree(root.left)
+#   right = sumOfTree(root.right)
+#   return root.data + left + right
 
 
+# print(sumOfTree(a))
 
+# DFS
+# def minValue(root):
+#   if root == None: return None
+#   smallest = float('inf')
+#   stack  = [root]
+#   while stack:
+#     current = stack.pop()
+#     if current.data < smallest: smallest = current.data
+#     if current.left: stack.append(current.left)
+#     if current.right: stack.append(current.right)
+
+#   return smallest
+
+# recursive DFS
+# def minValue(root):
+#   if root == None: return float('inf')
+#   left = minValue(root.left)
+#   right = minValue(root.right)
+
+#   return min(root.data, left, right)
+
+
+# print(minValue(a)) 
+
+
+def maxPathSum(root):
+  # root to leaf
+  if root == None: 
+    return float("-inf")
+  
+  if not root.left and not root.right: return root.data
+
+  left = maxPathSum(root.left)
+  right = maxPathSum(root.right)
+
+  return root.data + max(left,right)
+  
+
+print(maxPathSum(a))
+
+
+# print(maxPathSum(a.left) + maxPathSum(a.right) + a.data) ##diameter
 """
         a
        / \
