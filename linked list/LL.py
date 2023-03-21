@@ -8,34 +8,22 @@ class LinkedList:
     self.head = None 
     self.size = 0
 
-# returns the size of linked list
-  def __len__(self):
-    return self.size
 
-# repr
-  def __repr__(self) -> str:
 
-    if self.head == None:
-      return "<empty>"
-
-    res = ""
-    current = self.head
-    while current.next != None:
-      res += str(current.data)+","
-      current = current.next
-    res += str(current.data)
-    return res
-    
-
-# adds to the front of the linked list
   def prepend(self,data) -> None:
+    """
+    adds to the front of the linked list
+    """
     newHead =  Node(data)
     newHead.next = self.head
     self.head = newHead
     self.size += 1
 
-# adds to the end of linked list
+
   def append(self, data) -> None:
+    """
+    adds to the end of linked list
+    """
     if(self.head == None):
       head =  Node(data)
       self.head = head
@@ -48,8 +36,11 @@ class LinkedList:
     current.next = Node(data)
     self.size += 1
 
-# deletes the value inside linked list 
+
   def delete(self,data):
+    """
+    deletes the value inside linked list 
+    """
     if(self.head == None): return
 
     if(self.head.data == data):
@@ -65,8 +56,11 @@ class LinkedList:
         return
       current = current.next
 
-# clears the LL and makes it empty
+
   def clear(self):
+    """
+    clears the LL and makes it empty
+    """
     temp = self.head
     self.head = None
     while (temp != None):
@@ -74,11 +68,13 @@ class LinkedList:
       temp = temp.next
       del temp2
       self.size -= 1
-    return
   
   
-# searches for a value in LL and returns the pointer to the node that contains the value if such node exists
+
   def search(self, value):
+    """
+    searches for a value in LL and returns the pointer to the node that contains the value if such node exists
+    """
     temp = self.head
     while (temp != None):
       if (temp.data == value):
@@ -86,20 +82,52 @@ class LinkedList:
       temp  = temp.next
     return None
   
-# inserts a node after the target value
-  def insert(self,pos,value):
+
+  def insert(self,pos,data):
+    """
+   inserts a node at the specified index
+    """
     if self.head == None:
       raise Exception('Linked list is empty')
     
+    if pos < 0:
+      raise Exception('Index pos can\'t be negative')
+
+    if pos == 0:
+      self.prepend(data)
+      return
+
+    if pos == self.size - 1:
+      self.append(data)
+      return
+
+    temp = self.head
+    for i in range(pos-1):
+      temp = temp.next
+    newNode = Node(data)
+    newNode.next = temp.next
+    temp.next = newNode
+    self.size += 1
+      
+# returns the size of linked list
+  def __len__(self):
+    return self.size
+
+# repr
+  def __repr__(self) -> str:
+
+    if self.head == None:
+      return "<empty>"
+
+    res = "<"
     current = self.head
-    while current != None:
-      if (current.data == pos):
-        temp = Node(value)
-        temp.next = current.next
-        current.next = temp
-        return
+    while current.next != None:
+      res += str(current.data)+","
       current = current.next
-  
+    res += str(current.data) +">"
+    return res
+    
+
     
 
 ll = LinkedList()
@@ -123,3 +151,6 @@ print(ll)
 ll.insert(4,8)
 print(ll)
 print(ll.search(8))
+ll.insert(0,1)
+ll.insert(1,2)
+print(ll)
